@@ -116,6 +116,7 @@ void dump_table(hash_table *table) {
 }
 
 int main() {
+    hash_table* table = new_hash_table();
     size_t n_records = 26;
     size_t value_len = 26;
     char *str = malloc(value_len * sizeof(char));
@@ -128,21 +129,12 @@ int main() {
         strcpy(vals[j], str);
     }
 
-   hash_table* table = new_hash_table();
-   for (size_t j=0; j<n_records; j++) {
-       char k[KEY_CAP];
-       sprintf(k, "%d", keys[j]);
-       table_insert(table, k, vals[j]);
-   }
-
-    for (size_t j = 0; j < table->cap; j++) {
-        for (size_t i = 0; i < IDX_ENTRY_CAP; i++) {
-            if (table->entries[j].records[i].value != NULL) {
-                char* str = (char*)table->entries[j].records[i].value;
-                printf("%s\n", str);
-            }
-        }
+    for (size_t j=0; j<n_records; j++) {
+        char k[KEY_CAP];
+        sprintf(k, "%d", keys[j]);
+        table_insert(table, k, vals[j]);
     }
+
     dump_table(table);
     printf("\n\n[END]\n\n");
     return 1;
